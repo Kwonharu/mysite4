@@ -39,6 +39,18 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	//로그아웃
+	@RequestMapping(value="/logout", method = {RequestMethod.GET, RequestMethod.POST})
+	public String logout(@ModelAttribute UserVo userVo,
+						HttpSession session) {
+		System.out.println("UserController.logout");
+		
+		//세션의 모든 값을 지움.
+		session.invalidate();
+		
+		return "redirect:/";
+	}
+
 }
 
 
