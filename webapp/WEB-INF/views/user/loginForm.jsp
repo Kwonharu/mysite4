@@ -46,7 +46,7 @@
 	
 				<div id="user">
 					<div id="loginForm">
-						<form action="${pageContext.request.contextPath}/user/login" method="get">
+						<form action="login" method="get">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
@@ -60,6 +60,10 @@
 								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
+							<!-- 로그인 실패 시	-->
+							<c:if test="${param.result eq 'fail'}">
+								<p>로그인 실패</p>
+							</c:if>
 							
 							<!-- 버튼영역 -->
 							<div class="button-area">

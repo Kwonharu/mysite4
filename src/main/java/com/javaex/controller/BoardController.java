@@ -13,13 +13,14 @@ import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
 
 @Controller
+@RequestMapping(value="/board")
 public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
 	
 	
-	@RequestMapping(value="/board/list", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model){
 		System.out.println("BoardController.list()");
 		
@@ -33,7 +34,7 @@ public class BoardController {
 		return "board/list";
 	}
 	
-	@RequestMapping(value="/board/read", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/read", method={RequestMethod.GET, RequestMethod.POST})
 	public String read(@RequestParam(value="no") int no,
 					   Model model){
 		System.out.println("BoardController.read()");
