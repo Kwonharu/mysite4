@@ -46,46 +46,53 @@
 				<!-- //content-head -->
 	
 				<div id="board">
-					<div id="read">
+					<div id="modifyForm">
 						<form action="#" method="get">
 							<!-- 작성자 -->
 							<div class="form-group">
 								<span class="form-text">작성자</span>
-								<span class="form-value">${boardVo.name}</span>
+								<span class="form-value">정우성</span>
 							</div>
 							
 							<!-- 조회수 -->
 							<div class="form-group">
 								<span class="form-text">조회수</span>
-								<span class="form-value">${boardVo.hit}</span>
+								<span class="form-value">123</span>
 							</div>
 							
 							<!-- 작성일 -->
 							<div class="form-group">
 								<span class="form-text">작성일</span>
-								<span class="form-value">${boardVo.regDate}</span>
+								<span class="form-value">2020-03-02</span>
 							</div>
 							
 							<!-- 제목 -->
 							<div class="form-group">
-								<span class="form-text">제 목</span>
-								<span class="form-value">${boardVo.title}</span>
+								<label class="form-text" for="txt-title">제목</label>
+								<input type="text" id="txt-title" name="" value="여기에는 글제목이 출력됩니다.">
 							</div>
 						
+							
+						
 							<!-- 내용 -->
-							<div id="txt-content">
-								<span class="form-value" >
-									${boardVo.content}
-								</span>
+							<div class="form-group">
+								<textarea id="txt-content">여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.
+	여기에는 본문내용이 출력됩니다.</textarea>
 							</div>
 							
-							<a id="btn_modify" href="${pageContext.request.contextPath}/board/modifyForm">수정</a>
-							<a id="btn_modify" href="${pageContext.request.contextPath}/board/list">목록</a>
+							<a id="btn_cancel" href="">취소</a>
+							<button id="btn_modify" type="submit" >수정</button>
 							
 						</form>
 						<!-- //form -->
 					</div>
-					<!-- //read -->
+					<!-- //modifyForm -->
 				</div>
 				<!-- //board -->
 			</div>
@@ -93,6 +100,7 @@
 
 		</div>
 		<!-- //container  -->
+
 
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- //footer -->
@@ -102,8 +110,6 @@
 </body>
 
 </html>
-
-
 
 
 

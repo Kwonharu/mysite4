@@ -41,8 +41,7 @@ public class UserController {
 	
 	//로그아웃
 	@RequestMapping(value="/logout", method = {RequestMethod.GET, RequestMethod.POST})
-	public String logout(@ModelAttribute UserVo userVo,
-						HttpSession session) {
+	public String logout(HttpSession session) {
 		System.out.println("UserController.logout");
 		
 		//세션의 모든 값을 지움.
@@ -50,8 +49,25 @@ public class UserController {
 		
 		return "redirect:/";
 	}
-
+	
+	//회원가입폼
+	@RequestMapping(value="/joinForm", method = {RequestMethod.GET, RequestMethod.POST})
+	public String joinForm() {
+		System.out.println("UserController.joinForm()");
+		
+		return "user/joinForm";
+	}
+	
+	//회원가입
+	@RequestMapping(value="/join", method = {RequestMethod.GET, RequestMethod.POST})
+	public String join() {
+		System.out.println("UserController.join()");
+		
+		return "";
+	}
+	
 }
+
 
 
 
