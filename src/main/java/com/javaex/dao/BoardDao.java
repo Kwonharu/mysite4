@@ -17,11 +17,11 @@ public class BoardDao {
 	
 	//게시판 리스트 가져오기
 	public List<BoardVo> boardSelect(String keyword) {
-		System.out.println("BoardDao.boardSelect");
+		System.out.println("BoardDao.boardSelect()");
 		
-		List<BoardVo> BoardList = sqlSession.selectList("board.selectList", keyword);
+		List<BoardVo> boardList = sqlSession.selectList("board.selectList", keyword);
 		
-		return BoardList;
+		return boardList;
 	}
 	
 	//조회수 증가

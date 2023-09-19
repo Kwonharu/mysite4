@@ -8,6 +8,9 @@
     <mappers>
         <!-- <mapper resource="mybatis/mappers/phonebook.xml" /> -->
         <mapper resource="mybatis/mappers/user.xml" />
+        
         <mapper resource="mybatis/mappers/board.xml" />
+        
+        <mapper resource="mybatis/mappers/guest.xml" />
     </mappers>
 </configuration>
