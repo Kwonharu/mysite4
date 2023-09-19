@@ -68,7 +68,7 @@
 								<c:forEach items="${requestScope.rBoardList}" var="rBoardVo">
 									<tr>
 										<td>${rBoardVo.no}</td>
-										<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${rBoardVo.no}">${rBoardVo.title}</a></td>
+										<td class="text-left"><a href="${pageContext.request.contextPath}/rboard/read?no=${rBoardVo.no}">${rBoardVo.title}</a></td>
 										<td>${rBoardVo.groupNo}</td>
 										<td>${rBoardVo.orderNo}</td>
 										<td>${rBoardVo.depth}</td>
