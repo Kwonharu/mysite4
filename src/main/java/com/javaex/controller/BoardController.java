@@ -24,12 +24,13 @@ public class BoardController {
 	private BoardService boardService;
 	
 	
+	//리스트(검색 O)
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(Model model){
+	public String list(@RequestParam(value="keyword", required=false, defaultValue="") String keyword, Model model){
 		System.out.println("BoardController.list()");
 		
 		//boardService를 통해 리스트를 가져온다
-		List<BoardVo> boardList = boardService.getBoardList();
+		List<BoardVo> boardList = boardService.getBoardList(keyword);
 		//System.out.println(boardList);
 		
 		//모델에 리스트를 담는다(포워드)
@@ -170,18 +171,7 @@ public class BoardController {
 		}
 				
 	}
-	
-	//검색
-	@RequestMapping(value="/search", method={RequestMethod.GET, RequestMethod.POST})
-	public String search(@RequestParam(value="word") String word, Model model){
-		System.out.println("BoardController.search()");
-		
-		List<BoardVo> boardList = boardService.getSearchList(word);
-		
-		model.addAttribute("boardList", boardList);
-		
-		return "board/list";
-	}
+
 	
 }
 

@@ -3,8 +3,8 @@
 
 <mapper namespace="board">
 	
-	<!-- 전체 리스트 가져오기 -->
-	<select id="selectList" resultType="com.javaex.vo.BoardVo">
+	<!-- 전체 리스트 가져오기 + 검색 -->
+	<select id="selectList" parameterType="String" resultType="com.javaex.vo.BoardVo">
 		<![CDATA[
 			SELECT  BO.no,	--테이블 이름 == getter로 가져옴
 			        BO.title,
@@ -14,7 +14,8 @@
 			        TO_CHAR(BO.reg_date, 'YYYY-MM-DD HH:MI') regDate,
 			        US.no userNo
 			FROM board BO, users US
-			WHERE BO.user_no = US.no				 
+			WHERE BO.user_no = US.no		
+			and bo.title LIKE '%'||#{keyword}||'%'
 			order by reg_date desc
 		]]>
 	</select>
@@ -69,24 +70,6 @@
 			where no = #{no}
 		]]>
 	</update>
-	
-	
-	<!-- 검색된 리스트 가져오기 -->
-	<select id="searchList" parameterType="String" resultType="com.javaex.vo.BoardVo">
-		<![CDATA[
-			SELECT  BO.no,	--테이블 이름 == getter로 가져옴
-			        BO.title,
-			        BO.content,
-			        US.name,
-			        BO.hit,
-			        TO_CHAR(BO.reg_date, 'YYYY-MM-DD HH:MI') regDate,
-			        US.no userNo
-			FROM board BO, users US
-			WHERE BO.user_no = US.no		
-			and bo.title LIKE '%'||#{word}||'%'
-			order by reg_date desc
-		]]>
-	</select>
 	
 	
 </mapper>

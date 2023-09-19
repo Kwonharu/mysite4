@@ -15,10 +15,10 @@ public class BoardService {
 	private BoardDao boardDao;
 	
 	//게시판 리스트 가져오기
-	public List<BoardVo> getBoardList() {
+	public List<BoardVo> getBoardList(String keyword) {
 		System.out.println("BoardService.getBoardList()");
 		
-		List<BoardVo> boardList = boardDao.boardSelect();
+		List<BoardVo> boardList = boardDao.boardSelect(keyword);
 		
 		return boardList;
 	}
@@ -65,14 +65,6 @@ public class BoardService {
 		return count;
 	}
 	
-	//검색
-	public List<BoardVo> getSearchList(String word) {
-		System.out.println("BoardService.getSearchList()");
-		
-		List<BoardVo> boardList = boardDao.searchList(word);
-		
-		return boardList;
-	}
 }
 
 
