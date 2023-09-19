@@ -45,7 +45,7 @@ public class UserDao {
 	//회원 정보 수정
 	public int userUpdate(UserVo userVo) {
 		System.out.println("UserDao.userUpdate()");
-		System.out.println(userVo);
+		//System.out.println(userVo);
 		
 		int count = -1;
 		

@@ -93,6 +93,7 @@ public class UserController {
 		System.out.println("UserController.modifyForm()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
 		if(authUser != null) {
 			UserVo authUserVo = userService.getOneUser(authUser);
 			model.addAttribute("authUserVo", authUserVo);
@@ -105,12 +106,16 @@ public class UserController {
 	
 	//회원 수정
 	@RequestMapping(value="/modify", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modify(@ModelAttribute UserVo userVo) {
+	public String modify(@ModelAttribute UserVo userVo, HttpSession session) {
 		System.out.println("UserController.modify()");
 		
 		int count = userService.updateUser(userVo);
-	
+
 		if(count != -1) {
+			UserVo authUser = userService.getUser(userVo);
+			//System.out.println("authUser: "+authUser);
+			session.setAttribute("authUser", authUser);
+			
 			return "redirect:/";
 		}else {
 			return "redirect:/user/modifyForm?result=fail";

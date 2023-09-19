@@ -68,7 +68,7 @@
 								<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
 							</div>
 	
-							<!-- //나이 -->
+							<!-- //성별 -->
 							<div class="form-group">
 								<span class="form-text">성별</span> 
 								
@@ -84,6 +84,9 @@
 							<c:if test="${param.result eq 'fail'}">
 								<p>회원 정보 수정 실패</p>
 							</c:if>
+							
+							<input type="hidden" name="no" value="${authUserVo.no}" > 
+							<input type="hidden" name="id" value="${authUserVo.id}" > 
 							
 							<!-- 버튼영역 -->
 							<div class="button-area">
