@@ -55,10 +55,16 @@ public class BoardController {
 	
 	//글쓰기 폼
 	@RequestMapping(value="/writeForm", method={RequestMethod.GET, RequestMethod.POST})
-	public String writeForm(){
+	public String writeForm(HttpSession session){
 		System.out.println("BoardController.writeForm()");
 		
-		return "board/writeForm";
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser != null) {
+			return "board/writeForm";
+		}else {
+			return "redirect:/board/list";
+		}
 	}
 	
 	//글쓰기
@@ -83,26 +89,52 @@ public class BoardController {
 		//세션값 가져오기
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
-		//지우고 싶은 글 가져오기
-		BoardVo boardVo = boardService.getBoard(no);
-		
-		//세션 no == board userNo일 때
-		if(authUser.getNo() == boardVo.getUserNo()) {
-			//삭제
-			int count = boardService.deleteBoard(no);
+		if(authUser != null) {
+			//지우고 싶은 글 가져오기
+			BoardVo boardVo = boardService.getBoard(no);
 			
-			return "redirect:/board/list";
+			//세션 no == board userNo일 때
+			if(authUser.getNo() == boardVo.getUserNo()) {
+				//삭제
+				int count = boardService.deleteBoard(no);
+				
+				return "redirect:/board/list";
+			}else {
+				return "redirect:/board/list?result=fail";
+			}
 		}else {
-			return "redirect:/board/list?result=fail";
+			return "redirect:/board/list";
 		}
 	}
 	
 	//글수정 폼
 	@RequestMapping(value="/modifyForm", method={RequestMethod.GET, RequestMethod.POST})
-	public String modifyForm(){
+	public String modifyForm(@RequestParam(value="no") int no,
+							 Model model,
+							 HttpSession session){
 		System.out.println("BoardController.modifyForm()");
 		
-		return "board/modifyForm";
+		//세션값 가져오기
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser != null) {
+			//해당 글 가져오기
+			BoardVo boardVo = boardService.getBoard(no);
+			boardVo.setContent(boardVo.getContent().replace("<br>", "\r\n"));
+			
+			//세션 no == board userNo일 때
+			if(authUser.getNo() == boardVo.getUserNo()) {
+				//model로 던짐
+				model.addAttribute("boardVo", boardVo);
+				
+				return "board/modifyForm";
+				
+			}else {
+				return "redirect:/board/list";
+			}
+		}else {
+			return "redirect:/board/list";
+		}
 	}
 	
 }

@@ -47,7 +47,7 @@
 	
 				<div id="board">
 					<div id="read">
-						<form action="#" method="get">
+						<form action="modifyForm" method="get">
 							<!-- 작성자 -->
 							<div class="form-group">
 								<span class="form-text">작성자</span>
@@ -79,7 +79,7 @@
 								</span>
 							</div>
 							<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
-								<a id="btn_modify" href="modifyForm">수정</a>
+								<a id="btn_modify" href="modifyForm?no=${boardVo.no}">수정</a>
 							</c:if>
 							<a id="btn_modify" href="list">목록</a>
 							
