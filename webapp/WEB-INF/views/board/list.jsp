@@ -84,6 +84,7 @@
 						
 						<br>
 						
+						<!-- 삭제 실패 시 -->
 						<c:if test="${param.result eq 'fail'}">
 							<td>
 								<strong>삭제 실패</strong>

@@ -60,7 +60,15 @@
 		]]>
 	</delete>
 	
-	
+	<!-- 글 수정 -->
+	<update id="boardUpdate" parameterType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			update board
+			set title = #{title},
+			    content = #{content}
+			where no = #{no}
+		]]>
+	</update>
 	
 	
 	<!-- 검색된 리스트 가져오기 -->

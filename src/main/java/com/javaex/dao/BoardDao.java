@@ -66,7 +66,7 @@ public class BoardDao {
 		int count = -1;
 		
 		try {
-			count = sqlSession.insert("board.boardDelete", no);
+			count = sqlSession.delete("board.boardDelete", no);
 		}catch(DataIntegrityViolationException e) {
 			System.out.println("DB 오류 발생: " + e);
 		}
@@ -74,6 +74,21 @@ public class BoardDao {
 		return count;
 	}
 	
+	//글 수정
+	public int boardUpdate(BoardVo boardVo) {
+		System.out.println("BoardDao.boardUpdate()");
+		
+		int count = -1;
+		
+		try {
+			count = sqlSession.update("board.boardUpdate", boardVo);
+		}catch(DataIntegrityViolationException e) {
+			System.out.println("DB 오류 발생: " + e);
+		}
+		
+		return count;
+		
+	}
 }
 
 

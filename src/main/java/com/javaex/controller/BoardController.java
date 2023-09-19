@@ -63,7 +63,7 @@ public class BoardController {
 		if(authUser != null) {
 			return "board/writeForm";
 		}else {
-			return "redirect:/board/list";
+			return "redirect:/user/login";
 		}
 	}
 	
@@ -98,12 +98,16 @@ public class BoardController {
 				//삭제
 				int count = boardService.deleteBoard(no);
 				
-				return "redirect:/board/list";
+				if(count != -1) {
+					return "redirect:/board/list";
+				}else {
+					return "redirect:/board/list?result=fail";
+				}
 			}else {
 				return "redirect:/board/list?result=fail";
 			}
 		}else {
-			return "redirect:/board/list";
+			return "redirect:/user/loginForm";
 		}
 	}
 	
@@ -120,6 +124,8 @@ public class BoardController {
 		if(authUser != null) {
 			//해당 글 가져오기
 			BoardVo boardVo = boardService.getBoard(no);
+			
+			//이거 원래 dao에서 해야 할 거 같은데 메소드 재활용할 겸 여기서 처리.
 			boardVo.setContent(boardVo.getContent().replace("<br>", "\r\n"));
 			
 			//세션 no == board userNo일 때
@@ -133,8 +139,36 @@ public class BoardController {
 				return "redirect:/board/list";
 			}
 		}else {
-			return "redirect:/board/list";
+			return "redirect:/user/loginForm";
 		}
+	}
+	
+	//글수정
+	@RequestMapping(value="/modify", method={RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute BoardVo boardVo, HttpSession session){
+		System.out.println("BoardController.modify()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+
+		if(authUser != null) {
+			int no = boardVo.getNo();
+			
+			if(authUser.getNo() == boardVo.getUserNo()) {
+				
+				int count = boardService.modifyBoard(boardVo);
+				
+				if(count != -1) {
+					return "redirect:/board/list";
+				} else {
+					return "redirect:/board/modifyForm?no="+no+"&result=fail";
+				}
+			}else {
+				return "redirect:/board/modifyForm?no="+no+"&result=fail";
+			}
+		}else {
+			return "redirect:/user/loginForm";
+		}
+				
 	}
 	
 }

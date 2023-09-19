@@ -55,6 +55,16 @@ public class BoardService {
 		return count;
 	}
 	
+	
+	//글 삭제
+	public int modifyBoard(BoardVo boardVo) {
+		System.out.println("BoardService.modifyBoard()");
+		
+		int count = boardDao.boardUpdate(boardVo);
+		
+		return count;
+	}
+	
 }
 
 

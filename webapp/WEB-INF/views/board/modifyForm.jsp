@@ -81,6 +81,16 @@
 							<a id="btn_cancel" href="">취소</a>
 							<button id="btn_modify" type="submit" >수정</button>
 							
+							<input type="hidden" name="no" value="${boardVo.no}">
+							<input type="hidden" name="no" value="${boardVo.userNo}">
+							
+							<!-- 수정 실패 시 -->
+							<c:if test="${param.result eq 'fail'}">
+								<td>
+									<strong>수정 실패</strong>
+								</td>
+							</c:if>
+						
 						</form>
 						<!-- //form -->
 					</div>
