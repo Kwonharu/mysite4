@@ -58,23 +58,23 @@
 								<tr>
 									<th>번호</th>
 									<th>제목</th>
-									<th>글쓴이</th>
-									<th>조회수</th>
-									<th>작성일</th>
+									<th>group_no</th>
+									<th>order_no</th>
+									<th>depth</th>
 									<th>관리</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${requestScope.boardList}" var="boardVo">
+								<c:forEach items="${requestScope.rBoardList}" var="rBoardVo">
 									<tr>
-										<td>${boardVo.no}</td>
-										<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${boardVo.no}">${boardVo.title}</a></td>
-										<td>${boardVo.name}</td>
-										<td>${boardVo.hit}</td>
-										<td>${boardVo.regDate}</td>
-										<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
+										<td>${rBoardVo.no}</td>
+										<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${rBoardVo.no}">${rBoardVo.title}</a></td>
+										<td>${rBoardVo.groupNo}</td>
+										<td>${rBoardVo.orderNo}</td>
+										<td>${rBoardVo.depth}</td>
+										<c:if test="${sessionScope.authUser.no eq rBoardVo.userNo}">
 											<td>
-												<a href="delete?no=${boardVo.no}">[삭제]</a>
+												<a href="delete?no=${rBoardVo.no}">[삭제]</a>
 											</td>
 										</c:if>
 									</tr>
