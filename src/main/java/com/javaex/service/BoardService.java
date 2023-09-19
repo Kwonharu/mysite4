@@ -65,6 +65,14 @@ public class BoardService {
 		return count;
 	}
 	
+	//검색
+	public List<BoardVo> getSearchList(String word) {
+		System.out.println("BoardService.getSearchList()");
+		
+		List<BoardVo> boardList = boardDao.searchList(word);
+		
+		return boardList;
+	}
 }
 
 

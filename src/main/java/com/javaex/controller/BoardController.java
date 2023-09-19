@@ -171,6 +171,18 @@ public class BoardController {
 				
 	}
 	
+	//검색
+	@RequestMapping(value="/search", method={RequestMethod.GET, RequestMethod.POST})
+	public String search(@RequestParam(value="word") String word, Model model){
+		System.out.println("BoardController.search()");
+		
+		List<BoardVo> boardList = boardService.getSearchList(word);
+		
+		model.addAttribute("boardList", boardList);
+		
+		return "board/list";
+	}
+	
 }
 
 

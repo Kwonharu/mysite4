@@ -87,8 +87,17 @@ public class BoardDao {
 		}
 		
 		return count;
-		
 	}
+	
+	//검색
+	public List<BoardVo> searchList(String word){
+		System.out.println("BoardDao.searchList()");
+		
+		List<BoardVo> boardList = sqlSession.selectList("board.searchList", word);
+		
+		return boardList;
+	}
+	
 }
 
 
