@@ -78,9 +78,10 @@
 									${boardVo.content}
 								</span>
 							</div>
-							
-							<a id="btn_modify" href="${pageContext.request.contextPath}/board/modifyForm">수정</a>
-							<a id="btn_modify" href="${pageContext.request.contextPath}/board/list">목록</a>
+							<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
+								<a id="btn_modify" href="modifyForm">수정</a>
+							</c:if>
+							<a id="btn_modify" href="list">목록</a>
 							
 						</form>
 						<!-- //form -->

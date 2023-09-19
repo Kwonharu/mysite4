@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.BoardVo;
@@ -28,9 +29,9 @@ public class BoardDao {
 		System.out.println("BoardDao.updateHit()");
 		
 		int count = sqlSession.update("board.updateHit", no);
-		System.out.println("updateHit() count: "+count);
+		//System.out.println("updateHit() count: "+count);
 		
-		return 1;
+		return count;
 	}
 	
 	//글 1개 가져오기
@@ -41,6 +42,36 @@ public class BoardDao {
 		boardVo.setContent(boardVo.getContent().replace("\r\n", "<br>"));
 		
 		return boardVo;
+	}
+	
+	//글쓰기
+	public int boardWrite(BoardVo boardVo) {
+		System.out.println("BoardDao.boardWrite()");
+		
+		int count = -1;
+		
+		try {
+			count = sqlSession.insert("board.insertBoard", boardVo);
+		}catch(DataIntegrityViolationException e) {
+			System.out.println("DB 오류 발생: " + e);
+		}
+		
+		return count;
+	}
+	
+	//글 삭제
+	public int boardDelete(int no) {
+		System.out.println("BoardDao.boardDelete()");
+		
+		int count = -1;
+		
+		try {
+			count = sqlSession.insert("board.boardDelete", no);
+		}catch(DataIntegrityViolationException e) {
+			System.out.println("DB 오류 발생: " + e);
+		}
+		
+		return count;
 	}
 	
 }

@@ -36,7 +36,24 @@ public class BoardService {
 		
 		return boardVo;
 	}
+	
+	//글쓰기
+	public int writeBoard(BoardVo boardVo) {
+		System.out.println("BoardService.writeBoard()");
 
+		int count = boardDao.boardWrite(boardVo);
+		
+		return count;
+	}
+
+	//글 삭제
+	public int deleteBoard(int no) {
+		System.out.println("BoardService.deleteBoard()");
+		
+		int count = boardDao.boardDelete(no);
+		
+		return count;
+	}
 	
 }
 

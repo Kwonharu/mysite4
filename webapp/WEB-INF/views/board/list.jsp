@@ -47,7 +47,7 @@
 	
 				<div id="board">
 					<div id="list">
-						<form action="" method="">
+						<form action="" method="get">
 							<div class="form-group text-right">
 								<input type="text">
 								<button type="submit" id=btn_search>검색</button>
@@ -72,12 +72,24 @@
 										<td>${boardVo.name}</td>
 										<td>${boardVo.hit}</td>
 										<td>${boardVo.regDate}</td>
-										<td><a href="">[삭제]</a></td>
+										<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
+											<td>
+												<a href="delete?no=${boardVo.no}">[삭제]</a>
+											</td>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-			
+						
+						<br>
+						
+						<c:if test="${param.result eq 'fail'}">
+							<td>
+								<strong>삭제 실패</strong>
+							</td>
+						</c:if>
+						
 						<div id="paging">
 							<ul>
 								<li><a href="">◀</a></li>
@@ -97,7 +109,10 @@
 							
 							<div class="clear"></div>
 						</div>
-						<a id="btn_write" href="">글쓰기</a>
+						
+						<c:if test="${!empty sessionScope.authUser}">
+							<a id="btn_write" href="writeForm">글쓰기</a>
+						</c:if>
 					
 					</div>
 					<!-- //list -->

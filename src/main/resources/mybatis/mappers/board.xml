@@ -44,6 +44,42 @@
 		]]>
 	</select>
 	
+	<!-- 글쓰기 -->
+	<insert id="insertBoard" parameterType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			insert into board
+			values(seq_board_no.nextval, #{title}, #{content}, 0, SYSDATE, #{userNo})
+        ]]>
+	</insert>
+	
+	<!-- 글삭제 -->
+	<delete id="boardDelete" parameterType="int">
+		<![CDATA[
+			delete board
+			where no = #{no}
+		]]>
+	</delete>
+	
+	
+	
+	
+	<!-- 검색된 리스트 가져오기 -->
+	<select id="searchList" parameterType="String" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			SELECT  BO.no,	--테이블 이름 == getter로 가져옴
+			        BO.title,
+			        BO.content,
+			        US.name,
+			        BO.hit,
+			        TO_CHAR(BO.reg_date, 'YYYY-MM-DD HH:MI') regDate,
+			        US.no userNo
+			FROM board BO, users US
+			WHERE BO.user_no = US.no		
+			and bo.title LIKE '%'||#{word}||'%'
+			order by reg_date desc
+		]]>
+	</select>
+	
 	
 </mapper>
 
