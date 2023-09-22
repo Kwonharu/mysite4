@@ -53,6 +53,15 @@ public class GuestDao {
 		return count;
 	}
 	
+	
+	public GuestVo selectOneGuest(int no){
+		
+		GuestVo guestVo = sqlSession.selectOne("guest.selectOneGuest", no);	
+		
+		return guestVo;
+	}
+	
+
 }
 
 

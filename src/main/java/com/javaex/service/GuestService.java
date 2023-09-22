@@ -40,6 +40,15 @@ public class GuestService {
 		return count;
 	}
 	
+	
+	public GuestVo getGuest(int no) {
+		
+		GuestVo guestVo = guestDao.selectOneGuest(no);
+		
+		return guestVo;
+	}
+	
+	
 }
 
 

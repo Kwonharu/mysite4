@@ -47,23 +47,42 @@ public class GuestController {
 		}
 	}
 	
-	//삭제
-	@RequestMapping(value="/delete", method={RequestMethod.GET, RequestMethod.POST})
-	public String delete(@RequestParam(value="no") int no) {
-		System.out.println("GuestController.delete()");
+	
+	//삭제폼
+	@RequestMapping(value="/deleteForm", method={RequestMethod.GET, RequestMethod.POST})
+	public String deleteForm(@RequestParam(value="no") int no, Model model) {
+		System.out.println("deleteForm()");
 		
-		int count = guestService.guestDelete(no);
-		System.out.println(count);
+		GuestVo guestVo = guestService.getGuest(no);
 		
-		if(count == -1) {
-			return "redirect:/guest/addList?result=deletefail";
-		}else {
-			return "redirect:/guest/addList";
-		}
+		model.addAttribute("guestVo", guestVo);
+		
+		return "guest/deleteForm";
 	}
 	
 	
-	
+	//삭제
+	@RequestMapping(value="/delete", method={RequestMethod.GET, RequestMethod.POST})
+	public String delete(@RequestParam(value="no") int no,
+						 @RequestParam(value="password") String password) {
+		System.out.println("GuestController.delete()");
+		
+		GuestVo guestVo = guestService.getGuest(no);
+		
+		if(guestVo.getPassword().equals(password)) {
+			int count = guestService.guestDelete(no);
+			System.out.println(count);
+			
+			if(count == -1) {
+				return "redirect:/guest/deleteForm?result=fail";
+			}else {
+				return "redirect:/guest/addList";
+			}
+		}else {
+			return "redirect:/guest/deleteForm?result=fail&no="+guestVo.getNo();
+		}
+	}
+
 }
 
 
