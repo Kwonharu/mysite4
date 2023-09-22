@@ -40,7 +40,7 @@ public class GuestController {
 		System.out.println(count);
 		
 		if(count == -1) {
-			return "redirect:/guest/addList";
+			return "redirect:/guest/addList?result=fail";
 		}else {
 			return "redirect:/guest/addList";
 		}

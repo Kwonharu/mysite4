@@ -63,6 +63,14 @@
 								<tr>
 									<td colspan="4"><textarea name="content" cols="72" rows="5"></textarea></td>
 								</tr>
+								
+								<!-- 등록 실패 시 -->
+								<c:if test="${param.result eq 'fail'}">
+									<tr>
+										<strong>등록 실패</strong>
+									</tr>
+								</c:if>
+								
 								<tr class="button-area">
 									<td colspan="4" class="text-center"><button type="submit">등록</button></td>
 								</tr>
