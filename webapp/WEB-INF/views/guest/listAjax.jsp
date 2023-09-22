@@ -6,10 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script type="text/javascript" src="${pageContext.request.contextPath}/jquery/jquery-1.12.4.js"></script>
+
 <title>Insert title here</title>
 
 <link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+
 
 </head>
 
@@ -82,8 +85,15 @@
 						<!-- //guestWrite -->
 						<input type="hidden" name="action" value="add">
 						
-					</form>	
+					</form>
 					
+					<button id="btnGetData">데이터 가져오기</button>
+					
+					<div id="gbListArea">
+					
+					</div>
+					
+					<%-- 
 					<c:forEach items="${requestScope.guestList}" var="GuestVo">
 						<table class="guestRead">
 							<colgroup>
@@ -96,7 +106,14 @@
 								<td>${GuestVo.no}</td>
 								<td>${GuestVo.name}</td>
 								<td>${GuestVo.regDate}</td>
-								<td><a href="deleteForm?no=${GuestVo.no}">[삭제]</a></td>
+								<td><a href="delete?no=${GuestVo.no}">[삭제]</a></td>
+								<c:if test="${param.result eq 'deletefail'}">
+									<tr>
+										<td>
+											<strong>삭제 실패</strong>
+										</td>
+									</tr>
+								</c:if>
 							</tr>
 							<tr>
 								<td colspan=4 class="text-left">${GuestVo.content}</td>
@@ -104,7 +121,8 @@
 						</table>
 					</c:forEach>	
 					<!-- //guestRead -->
-					
+					 --%>
+					 
 				</div>
 				<!-- //guestbook -->
 			
@@ -119,6 +137,95 @@
 	<!-- //wrap -->
 
 </body>
+
+<script type="text/javascript">
+
+//DOM이 완성되었을 때 --> 그리기 직전
+$(document).ready(()=>{
+	console.log("ready()");
+	fetchList();
+	console.log("ready() 요청 후");
+});
+
+
+//화면 그리고 난 후
+$(window).load(()=>{
+	console.log("load()");
+//	fetchList();
+	console.log("load()요청 후");
+});
+
+
+//버튼 클릭 시
+$("#btnGetData").on("click", ()=>{
+	console.log("무요");
+	
+	//fetchList();
+});	
+
+	
+//ajax 통신을 이용해 데이터를 요청하고 + 그린다(render())
+function fetchList(){
+	
+	console.log("fetchList() 실행");
+	
+	//서버로부터 guestbook 데이터만 받고 싶다
+	$.ajax({
+		url : "${pageContext.request.contextPath }/api/guest/list",		
+		type : "get",
+		//보낼 때
+		//contentType : "application/json",
+		//data : {name: "귀여워서 사망"},
+
+		//받을 때
+		dataType : "json",
+		success : function(guestList){
+			/*성공시 처리해야될 코드 작성*/
+			//리스트 받기
+			console.log(guestList);
+
+			for(let i = 0; i<guestList.length; i++){
+				render(guestList[i]); //그리는 함수
+			}
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+};
+	
+
+//방명록 내용을 1개씩 그린다.
+function render(guestVo){
+	
+	let str = '';
+	str += '<table class="guestRead">';
+	str += '	<colgroup>';
+	str += '		<col style="width: 10%;">';
+	str += '		<col style="width: 40%;">';
+	str += '		<col style="width: 40%;">';
+	str += '		<col style="width: 10%;">';
+	str += '	</colgroup>';
+	str += '	<tr>';
+	str += '		<td>'+guestVo.no+'</td>';
+	str += '		<td>'+guestVo.name+'</td>';
+	str += '		<td>'+guestVo.regDate+'</td>';
+	str += '		<td><a href="">[삭제]</a></td>';
+	str += '	</tr>';
+	str += '	<tr>';
+	str += '		<td colspan=4 class="text-left">'+guestVo.content+'</td>';
+	str += '	</tr>';
+	str += '</table>';
+	
+	$("#gbListArea").append(str);
+};
+	
+
+
+</script>
+
 
 </html>
 
