@@ -18,7 +18,7 @@
 			FROM rboard BO, users US
 			WHERE BO.user_no = US.no		
 			and bo.title LIKE '%'||#{keyword}||'%'
-			order by reg_date desc
+			order by bo.no desc
 		]]>
 	</select>
 
