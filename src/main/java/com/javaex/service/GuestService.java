@@ -22,6 +22,15 @@ public class GuestService {
 		return guestList;
 	}
 	
+	//등록
+	public int guestInsert(GuestVo guestVo) {
+		System.out.println("GuestService.guestInsert()");
+		
+		int count = guestDao.insertGuest(guestVo);
+		
+		return count;
+	}
+	
 }
 
 

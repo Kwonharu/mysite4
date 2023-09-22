@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.GuestVo;
@@ -20,6 +21,21 @@ public class GuestDao {
 		List<GuestVo> guestList = sqlSession.selectList("guest.selectGuestList");	
 		
 		return guestList;
+	}
+	
+	//등록
+	public int insertGuest(GuestVo guestVo){
+		System.out.println("GuestDao.insertGuest()");
+		
+		int count = -1;
+		
+		try {
+			count = sqlSession.insert("guest.insertGuest", guestVo);	
+		}catch(DataIntegrityViolationException e) {
+			System.out.println("DB 오류 발생: " + e);
+		}
+		
+		return count;
 	}
 	
 }
