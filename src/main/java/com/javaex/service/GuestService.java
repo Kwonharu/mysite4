@@ -31,6 +31,15 @@ public class GuestService {
 		return count;
 	}
 	
+	//등록
+	public int guestDelete(int no) {
+		System.out.println("GuestService.guestDelete()");
+		
+		int count = guestDao.deleteGuest(no);
+		
+		return count;
+	}
+	
 }
 
 

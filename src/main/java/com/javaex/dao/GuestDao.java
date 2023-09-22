@@ -38,6 +38,21 @@ public class GuestDao {
 		return count;
 	}
 	
+	//삭제
+	public int deleteGuest(int no){
+		System.out.println("GuestDao.deleteGuest()");
+		
+		int count = -1;
+		
+		try {
+			count = sqlSession.insert("guest.deleteGuest", no);	
+		}catch(DataIntegrityViolationException e) {
+			System.out.println("DB 오류 발생: " + e);
+		}
+		
+		return count;
+	}
+	
 }
 
 

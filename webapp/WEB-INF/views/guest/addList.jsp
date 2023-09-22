@@ -67,7 +67,9 @@
 								<!-- 등록 실패 시 -->
 								<c:if test="${param.result eq 'fail'}">
 									<tr>
-										<strong>등록 실패</strong>
+										<td>
+											<strong>등록 실패</strong>
+										</td>
 									</tr>
 								</c:if>
 								
@@ -94,7 +96,14 @@
 								<td>${GuestVo.no}</td>
 								<td>${GuestVo.name}</td>
 								<td>${GuestVo.regDate}</td>
-								<td><a href="">[삭제]</a></td>
+								<td><a href="delete?no=${GuestVo.no}">[삭제]</a></td>
+								<c:if test="${param.result eq 'deletefail'}">
+									<tr>
+										<td>
+											<strong>삭제 실패</strong>
+										</td>
+									</tr>
+								</c:if>
 							</tr>
 							<tr>
 								<td colspan=4 class="text-left">${GuestVo.content}</td>

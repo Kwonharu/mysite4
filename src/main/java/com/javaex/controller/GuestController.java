@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.GuestService;
 import com.javaex.vo.GuestVo;
@@ -44,8 +45,24 @@ public class GuestController {
 		}else {
 			return "redirect:/guest/addList";
 		}
-		
 	}
+	
+	//삭제
+	@RequestMapping(value="/delete", method={RequestMethod.GET, RequestMethod.POST})
+	public String delete(@RequestParam(value="no") int no) {
+		System.out.println("GuestController.delete()");
+		
+		int count = guestService.guestDelete(no);
+		System.out.println(count);
+		
+		if(count == -1) {
+			return "redirect:/guest/addList?result=deletefail";
+		}else {
+			return "redirect:/guest/addList";
+		}
+	}
+	
+	
 	
 }
 

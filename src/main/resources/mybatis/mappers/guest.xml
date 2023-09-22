@@ -24,6 +24,16 @@
 		]]>
 	</insert>
 
+
+	<!-- 삭제 -->
+	<delete id="deleteGuest" parameterType="int">
+		<![CDATA[
+			delete from guestbook
+			where no = #{no}
+		]]>
+	</delete>
+
+
 </mapper>
 
 
