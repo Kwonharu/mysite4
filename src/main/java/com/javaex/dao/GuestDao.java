@@ -56,10 +56,22 @@ public class GuestDao {
 	
 	public GuestVo selectOneGuest(int no){
 		
-		GuestVo guestVo = sqlSession.selectOne("guest.selectOneGuest", no);	
+		//GuestVo guestVo = sqlSession.selectOne("guest.selectOneGuest", no);	
 		
-		return guestVo;
+		return sqlSession.selectOne("guest.selectOneGuest", no);
 	}
+	
+	//방명록 글 저장 ajax selectKey
+	public int insertSelectKey(GuestVo guestVo){
+		System.out.println("GuestDao.insertSelectKey()");
+		
+		//System.out.println(guestVo);
+		int count = sqlSession.insert("guest.insertSelectKey", guestVo);	
+		//System.out.println(guestVo);
+		
+		return count;
+	}
+	
 	
 
 }

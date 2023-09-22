@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.GuestService;
@@ -33,10 +35,22 @@ public class ApiGuestController {
 		
 		//전체 리스트 가져오기
 		List<GuestVo> guestList = guestService.getGuestList();
-		System.out.println(guestList);
+		//System.out.println(guestList);
 		
 		return guestList;
 			 //메모리의 주소 (실제 객체가 아님)
+	}
+	
+	//방명록 저장 ajax
+	@ResponseBody
+	@RequestMapping(value="/api/guest/add", method = {RequestMethod.GET, RequestMethod.POST})
+	public GuestVo add(@ModelAttribute GuestVo guestVo) {
+		System.out.println("ApiGuestController.add()");
+
+		GuestVo gVo = guestService.addGuest(guestVo);
+		//System.out.println(gVo);
+		
+		return gVo;
 	}
 	
 }

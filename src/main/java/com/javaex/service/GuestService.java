@@ -49,6 +49,23 @@ public class GuestService {
 	}
 	
 	
+	//guest 등록 ajax
+	public GuestVo addGuest(GuestVo guestVo) {
+		System.out.println("GuestService.addGuest()");
+		
+		//등록
+		//System.out.println(guestVo);
+		int count = guestDao.insertSelectKey(guestVo);
+		//System.out.println(guestVo);
+		
+		//데이터 1개 가져오기
+		// no값 확인
+		int no = guestVo.getNo();
+		// no데이터 가져오기
+		
+		return guestDao.selectOneGuest(no);
+	}
+	
 }
 
 

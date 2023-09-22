@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="${pageContext.request.contextPath}/jquery/jquery-1.12.4.js"></script>
-
 <title>Insert title here</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/jquery/jquery-1.12.4.js"></script>
 
 <link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
@@ -48,7 +48,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form action="insert" method="get">
+					<form id="guestbookFrom" action="" method="get">
 						<table id="guestAdd">
 							<colgroup>
 								<col style="width: 70px;">
@@ -77,7 +77,7 @@
 								</c:if>
 								
 								<tr class="button-area">
-									<td colspan="4" class="text-center"><button type="submit">등록</button></td>
+									<td colspan="4" class="text-center"><button id="btnSubmit" type="submit">등록</button></td>
 								</tr>
 							</tbody>
 							
@@ -163,6 +163,73 @@ $("#btnGetData").on("click", ()=>{
 	//fetchList();
 });	
 
+
+//등록 버튼을 클릭했을 떼
+//form의 submit 버튼의 경우, form id에 submit 이벤트를 지정해줘야 한다.
+$("#guestbookFrom").on("submit", (e)=>{
+	console.log("등록 버튼 클릭");
+	e.preventDefault(); //원래 기능을 작동하지 않게 함
+	
+	//데이터 수집
+	let name = $("#input-uname").val();
+	let pw = $("#input-pass").val();
+	let content = $('[name="content"]').val(); 
+	
+	let guestVo = {
+		name: name,
+		password: pw,
+		content: content
+	};
+	
+	console.log(guestVo);
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath }/api/guest/add",		
+		type : "post",
+		/*contentType : "application/json",*/
+		data : guestVo,
+
+		dataType : "json",
+		success : function(guestVo){
+			/*성공시 처리해야될 코드 작성*/
+			console.log(guestVo);
+			
+			//그리기
+			render(guestVo, "down");
+			
+			//초기화
+			name = $("#input-uname").val("");
+			pw = $("#input-pass").val("");
+			content = $('[name="content"]').val(""); 
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+
+	
+});
+
+
+//삭제 버튼 눌렀을 때 (위임)
+$("#gbListArea").on("click", ".btnDelForm", function(){
+	console.log("삭제 버튼 클릭");
+	let password = window.prompt("비밀번호를 썩션♂하세요");
+	console.log(password);
+	
+	//password, no
+	let $this = $(this);
+	let no = $this.data("no");
+	console.log(no);
+	
+	//ajax 요청 db 삭제
+	
+	
+	//화면에서 지운다
+	$("#t"+no).remove();
+	
+});
+	
 	
 //ajax 통신을 이용해 데이터를 요청하고 + 그린다(render())
 function fetchList(){
@@ -172,10 +239,10 @@ function fetchList(){
 	//서버로부터 guestbook 데이터만 받고 싶다
 	$.ajax({
 		url : "${pageContext.request.contextPath }/api/guest/list",		
-		type : "get",
+		type : "get",	//이거 get으로 해도 어차피 안 보임
 		//보낼 때
 		//contentType : "application/json",
-		//data : {name: "귀여워서 사망"},
+		//data : {name: "아린이 왔다감"},
 
 		//받을 때
 		dataType : "json",
@@ -185,7 +252,7 @@ function fetchList(){
 			console.log(guestList);
 
 			for(let i = 0; i<guestList.length; i++){
-				render(guestList[i]); //그리는 함수
+				render(guestList[i], "up"); //그리는 함수
 			}
 			
 		},
@@ -198,10 +265,10 @@ function fetchList(){
 	
 
 //방명록 내용을 1개씩 그린다.
-function render(guestVo){
+function render(guestVo, dir){
 	
 	let str = '';
-	str += '<table class="guestRead">';
+	str += '<table id=t'+guestVo.no+' class="guestRead">';
 	str += '	<colgroup>';
 	str += '		<col style="width: 10%;">';
 	str += '		<col style="width: 40%;">';
@@ -212,14 +279,21 @@ function render(guestVo){
 	str += '		<td>'+guestVo.no+'</td>';
 	str += '		<td>'+guestVo.name+'</td>';
 	str += '		<td>'+guestVo.regDate+'</td>';
-	str += '		<td><a href="">[삭제]</a></td>';
+	str += '		<td><button class="btnDelForm" data-no='+ guestVo.no +'>삭제</button></td>';
 	str += '	</tr>';
 	str += '	<tr>';
 	str += '		<td colspan=4 class="text-left">'+guestVo.content+'</td>';
 	str += '	</tr>';
 	str += '</table>';
 	
-	$("#gbListArea").append(str);
+	if(dir == "up"){
+		$("#gbListArea").append(str);
+	}else if(dir == "down"){
+		$("#gbListArea").prepend(str);
+	}else{
+		console.log("무요!!!");
+	}
+	
 };
 	
 
@@ -228,5 +302,8 @@ function render(guestVo){
 
 
 </html>
+
+
+
 
 
