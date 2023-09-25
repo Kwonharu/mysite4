@@ -47,6 +47,23 @@ public class UserService {
 		
 		return authUser;
 	}
+	
+	//idCheck
+	public boolean idCheck(String id) {
+		System.out.println("UserService.idCheck()");
+		//System.out.println(id);
+		
+		UserVo userVo = userDao.selectUserOneById(id);
+		//System.out.println(userVo);
+		
+		//비즈니스 로직
+		if(userVo == null){	//해당 id 없음
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }
 
 

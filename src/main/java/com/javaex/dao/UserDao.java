@@ -1,7 +1,5 @@
 package com.javaex.dao;
 
-import java.sql.SQLException;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -69,4 +67,23 @@ public class UserDao {
 		return authUser;
 	}
 	
+	
+	//idCheck
+	public UserVo selectUserOneById(String id) {
+		System.out.println("UserDao.selectUserOneById()");
+		//System.out.println(id);
+		
+		UserVo userVo = sqlSession.selectOne("user.selectUserOneById", id);
+		//System.out.println(userVo);
+		
+		return userVo;
+	}
+	
+	
 }
+
+
+
+
+
+

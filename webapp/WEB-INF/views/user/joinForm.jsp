@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/jquery/jquery-1.12.4.js"></script>
 <link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
 
@@ -48,13 +50,14 @@
 	
 				<div id="user">
 					<div id="joinForm">
-						<form action="join" method="get">
+						<form id="formJoin" action="${pageContext.request.contextPath}/user/join" method="get">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-								<button type="button" id="">중복체크</button>
+								<button type="button" id="btnIdCheck">중복체크</button>
+								<p id="checkResult"></p>
 							</div>
 	
 							<!-- 비밀번호 -->
@@ -77,7 +80,7 @@
 								<input type="radio" id="rdo-male" name="gender" value="male" checked="checked"> 
 								
 								<label for="rdo-female">여</label> 
-								<input type="radio" id="rdo-female" name="gender" value="femal" > 
+								<input type="radio" id="rdo-female" name="gender" value="female" > 
 	
 							</div>
 	
@@ -85,7 +88,7 @@
 							<div class="form-group">
 								<span class="form-text">약관동의</span> 
 								
-								<input type="checkbox" id="chk-agree" value="" name="">
+								<input type="checkbox" id="chk-agree" value="yes" name="agree">
 								<label for="chk-agree">서비스 약관에 동의합니다.</label> 
 							</div>
 							
@@ -117,6 +120,104 @@
 	<!-- //wrap -->
 
 </body>
+
+<script type="text/javascript">
+$("#btnIdCheck").on("click", function(){
+	console.log("중복 체크 클릭");
+	
+	let id = $("#input-uid").val();
+	//console.log(id);
+	
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath }/user/idCheck",		
+		type : "post",	//이거 get으로 해도 어차피 안 보임
+		//보낼 때
+		//contentType : "application/json",
+		data : {id: id}, //파라미터
+
+		//받을 때
+		dataType : "json",
+		success : function(jsonResult){
+			/*성공시 처리해야될 코드 작성*/
+			console.log(jsonResult);
+			
+			
+			if(jsonResult.result == "success"){ //정상적인 통신 성공
+				if(jsonResult.data == true){
+					$("#checkResult").text("사용 가능");	
+				}else if(jsonResult.data == false){
+					$("#checkResult").text("사용 불가");
+				}else{
+					console.log("오류");
+				}
+			}else if(jsonResult.result == "fail"){ //정상적인 통신 X
+				console.log("통1신 오류");
+			}
+			
+			/*
+			if(result == "true"){
+				$("#checkResult").text("사용 가능");	
+			}else if(result == "false"){
+				$("#checkResult").text("사용 불가");
+			}else{
+				console.log("오류");
+			}
+			*/
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+});
+
+
+//회원가입 버튼 클릭 시 (submit 버튼은 form에 클릭 이벤트)
+$("#formJoin").on("submit", function(event){
+	console.log("회원가입 버튼 클릭");
+	
+	//id 입력 안 했을 떄
+	let id = $("#input-uid").val();
+	if(id == "" || id == null){
+		alert("id를 입력하세여");
+		return false;
+	}
+	
+	//pw 검사
+	let pw = $("#input-pass").val();
+	if(pw == "" || pw == null){
+		alert("pw를 입력하세여");
+		return false;
+		
+	}else if(pw.length < 3){
+		alert("pw는 3자 이상이어야 합니다.");
+		return false;
+	}
+	
+	//name 검사
+	let name = $("#input-name").val();
+	if(name == "" || name == null){
+		alert("마 니는 이름도 읎나");
+		return false;
+	}
+	
+	//약관동의
+	let agree = $("#chk-agree").is(":checked");
+	if(agree == false){
+		alert("약관에 동의해 개인정보를 팔아넘겨 주세요. 으하핳하ㅏㅎ핳하ㅏㅏ하핳ㅎ");
+		return false;
+	}
+	
+	
+	//submit의 원래 전송을 하지 않아야 할 떄 return false;
+	return true;
+});
+
+
+</script>
+
 
 </html>
 

@@ -8,9 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.dao.UserDao;
 import com.javaex.service.UserService;
+import com.javaex.vo.JsonResultVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -70,10 +73,12 @@ public class UserController {
 	public String join(@ModelAttribute UserVo userVo) {
 		System.out.println("UserController.join()");
 		
+		System.out.println(userVo);
+		
 		int count = userService.insertUser(userVo);
 		
 		if(count != -1) {
-			return "redirect:/user/joinOk";
+			return "user/joinOk";
 		}else {
 			return "redirect:/user/joinForm?result=fail";
 		}
@@ -121,6 +126,27 @@ public class UserController {
 			return "redirect:/user/modifyForm?result=fail";
 		}
 	}
+	
+	
+	//idcheck
+	@ResponseBody
+	@RequestMapping(value="/idCheck", method = {RequestMethod.GET, RequestMethod.POST})
+	public JsonResultVo idCheck(@RequestParam(value="id") String id) {
+		System.out.println("UserController.idCheck()");
+		//System.out.println("id");
+		
+		//true 사용가능, false 사용불가
+		boolean check = userService.idCheck(id);
+		System.out.println(check);
+		
+		
+		JsonResultVo jsonResultVo = new JsonResultVo();
+		jsonResultVo.success(check);
+
+		
+		return jsonResultVo;
+	}
+	
 	
 }
 

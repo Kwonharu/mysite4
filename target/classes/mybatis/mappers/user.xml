@@ -46,6 +46,20 @@
 		]]>
 	</update>
 	
+	
+	<!-- idCheck -->
+	<select id="selectUserOneById" parameterType="String" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+			select  no,
+			        id,
+			        name,
+			        gender
+			from users
+			where id = #{id}
+		]]>
+	</select>
+	
+	
 </mapper>
 
 
