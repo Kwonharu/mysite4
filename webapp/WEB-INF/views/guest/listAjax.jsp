@@ -48,7 +48,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form id="guestbookFrom" action="" method="get">
+					<form id="guestbookForm" action="" method="get">
 						<table id="guestAdd">
 							<colgroup>
 								<col style="width: 70px;">
@@ -87,7 +87,7 @@
 						
 					</form>
 					
-					<button id="btnGetData">데이터 가져오기</button>
+					<!-- <button id="btnGetData">데이터 가져오기</button> -->
 					
 					<div id="gbListArea">
 					
@@ -166,7 +166,7 @@ $("#btnGetData").on("click", ()=>{
 
 //등록 버튼을 클릭했을 떼
 //form의 submit 버튼의 경우, form id에 submit 이벤트를 지정해줘야 한다.
-$("#guestbookFrom").on("submit", (e)=>{
+$("#guestbookForm").on("submit", (e)=>{
 	console.log("등록 버튼 클릭");
 	e.preventDefault(); //원래 기능을 작동하지 않게 함
 	
@@ -184,7 +184,7 @@ $("#guestbookFrom").on("submit", (e)=>{
 	console.log(guestVo);
 	
 	$.ajax({
-		url : "${pageContext.request.contextPath }/api/guest/add",		
+		url : "${pageContext.request.contextPath }/api/guest/add2",		
 		type : "post",
 		/*contentType : "application/json",*/
 		data : guestVo,
