@@ -213,6 +213,8 @@ $("#formJoin").on("submit", function(event){
 	
 	//submit의 원래 전송을 하지 않아야 할 떄 return false;
 	return true;
+	
+	//return false; == event.preventdefault(); 랑 비슷한 효과
 });
 
 
