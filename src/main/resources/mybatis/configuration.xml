@@ -15,5 +15,7 @@
         
         <mapper resource="mybatis/mappers/rboard.xml" />
         
+        <mapper resource="mybatis/mappers/gallery.xml" />
+        
     </mappers>
 </configuration>
