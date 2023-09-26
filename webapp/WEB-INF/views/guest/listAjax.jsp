@@ -239,7 +239,7 @@ $("#gbListArea").on("click", ".btnDelForm", function(){	//this 사용 시 화살
 		};
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/api/guest/delete",		
+			url : "${pageContext.request.contextPath}/api/guest/delete",
 			type : "post",	//이거 get으로 해도 어차피 안 보임
 			//보낼 때
 			contentType : "application/json",
