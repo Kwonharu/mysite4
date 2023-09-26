@@ -29,6 +29,22 @@
 	</insert>
 
 
+	<!-- 글 1개 가져오기 -->
+	<select id="selectGalleryPost" resultType="com.javaex.vo.GalleryVo" parameterType="int">
+		<![CDATA[
+			select  no,
+			        user_no userNo,
+			        content,
+			        file_path filePath,
+			        org_name orgName,
+			        save_name saveName,
+			        file_size fileSize
+			from gallery
+			where user_no = #{no}
+		]]>
+	</select>
+
+
 </mapper>
 
 

@@ -68,7 +68,7 @@
 							<c:forEach items="${requestScope.galleryList}" var="galleryVo">
 								<li>
 									<div class="view" >
-										<img class="imgItem" src="${pageContext.request.contextPath}/upload/${galleryVo.saveName}">
+										<img data-no="${galleryVo.no}" class="imgItem" src="${pageContext.request.contextPath}/upload/${galleryVo.saveName}">
 										<div class="imgWriter">작성자: <strong>${galleryVo.name}</strong></div>
 									</div>
 								</li>
@@ -151,9 +151,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-				<%-- <c:if test="${sessionScope.authUser.no eq requestScope.galleryList.userNo}"> --%>
-					<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
-				<%-- </c:if> --%>
+				<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -178,7 +176,6 @@ $("#btnImgUpload").on("click", ()=>{
 	//닫기
 	//$("#addModal").modal("hide");
 	
-	
 });
 
 
@@ -188,7 +185,35 @@ $(".imgItem").on("click", function(){
 	
 	//열기
 	$("#viewModal").modal("show");
-})
+	
+	let $this = $(this);
+	
+	let no = $this.data("no"); //게시글의 no
+	console.log(no);
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/gallery/post",
+		type : "post",
+		//보낼 때
+		/* contentType : "application/json", */  //no 하나 보낼 거라 굳이?
+		data : {no: no},
+
+		//받을 때
+		dataType : "json",
+		success : function(galleryVo){
+		
+			$("#viewModal #viewModelImg").attr("src", "${pageContext.request.contextPath}/upload/"+galleryVo.saveName);
+			console.log(galleryVo.filePath);
+			$("#viewModal #viewModelContent").text(galleryVo.content);
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+
+	
+});
 
 
 </script>

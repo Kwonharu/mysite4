@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.GalleryService;
@@ -48,6 +49,17 @@ public class GalleryController {
 		galleryService.uploadFile(content, name, no, file);
 		
 		return "redirect:/gallery/list";
+	}
+	
+	//글 클릭 시 가져오기
+	@ResponseBody
+	@RequestMapping(value="/gallery/post", method= {RequestMethod.GET, RequestMethod.POST})
+	public GalleryVo post(@RequestParam(value="no") int no) {
+		System.out.println("GalleryController.post()");
+		
+		GalleryVo galleryVo = galleryService.getGalleryPost(no);
+		
+		return galleryVo;
 	}
 	
 }

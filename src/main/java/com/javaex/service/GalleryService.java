@@ -36,6 +36,11 @@ public class GalleryService {
 	public int uploadFile(String content, String name, int no, MultipartFile file) {
 		System.out.println("GalleryService.uploadFile()");
 		
+		//파일 null일때 처리 isEmpty()
+		//...
+		//.....
+		
+		
 		//파일 저장 디렉토리
 		String saveDir = "C:\\javaStudy\\upload";
 		
@@ -89,6 +94,15 @@ public class GalleryService {
 		}
 		
 		return count;
+	}
+	
+	//글 1개 가져오기
+	public GalleryVo getGalleryPost(int no) {
+		System.out.println("GalleryService.getGalleryPost()");
+		
+		GalleryVo galleryVo = galleryDao.selectGalleryPost(no);
+		
+		return galleryVo;
 	}
 }
 

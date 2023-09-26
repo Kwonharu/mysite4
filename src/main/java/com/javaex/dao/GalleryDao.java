@@ -34,6 +34,15 @@ public class GalleryDao {
 
 		return count;
 	}
+	
+	//갤러리 리스트 가져오기
+	public GalleryVo selectGalleryPost(int no) {
+		System.out.println("GalleryDao.selectGalleryPost()");
+		
+		GalleryVo galleryVo = sqlSession.selectOne("gallery.selectGalleryPost", no);
+		
+		return galleryVo;
+	}
 
 }
 
