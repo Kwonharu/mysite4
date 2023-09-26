@@ -55,6 +55,25 @@ public class ApiGuestController {
 		return gVo;
 	}
 	
+	
+	//방명록 삭제 
+	@ResponseBody
+	@RequestMapping(value="/api/guest/delete", method = {RequestMethod.GET, RequestMethod.POST})
+	public JsonResultVo delete(@RequestBody GuestVo guestVo) {
+		System.out.println("ApiGuestController.delete()");
+		System.out.println(guestVo);
+		
+		//true 삭제 성공, false 삭제 실패
+		boolean check = guestService.deleteGuest(guestVo);
+		//System.out.println(check);
+		
+		JsonResultVo jsonResultVo = new JsonResultVo();
+		jsonResultVo.success(check);
+				
+		return jsonResultVo;
+	}
+	
+	
 	//////////////////////////////////////////////////
 	
 	//방명록 메인 화면

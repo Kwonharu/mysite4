@@ -45,7 +45,7 @@ public class GuestDao {
 		int count = -1;
 		
 		try {
-			count = sqlSession.insert("guest.deleteGuest", no);	
+			count = sqlSession.delete("guest.deleteGuest", no);	
 		}catch(DataIntegrityViolationException e) {
 			System.out.println("DB 오류 발생: " + e);
 		}
@@ -73,6 +73,11 @@ public class GuestDao {
 	}
 	
 	
+	//1명 찾기 ajax
+	public GuestVo selectGuestOne(GuestVo guestVo){
+		
+		return sqlSession.selectOne("guest.selectGuestOne", guestVo);
+	}
 
 }
 

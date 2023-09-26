@@ -184,7 +184,7 @@ $("#guestbookForm").on("submit", (e)=>{
 	console.log(guestVo);
 	
 	$.ajax({
-		url : "${pageContext.request.contextPath }/api/guest/add2",		
+		url : "${pageContext.request.contextPath }/api/guest/add",		
 		type : "post",
 		/*contentType : "application/json",*/
 		data : guestVo,
@@ -212,21 +212,61 @@ $("#guestbookForm").on("submit", (e)=>{
 
 
 //삭제 버튼 눌렀을 때 (위임)
-$("#gbListArea").on("click", ".btnDelForm", function(){
+$("#gbListArea").on("click", ".btnDelForm", function(){	//this 사용 시 화살표 함수 쓰지 말 것
 	console.log("삭제 버튼 클릭");
+	
 	let password = window.prompt("비밀번호를 썩션♂하세요");
-	console.log(password);
 	
-	//password, no
-	let $this = $(this);
-	let no = $this.data("no");
-	console.log(no);
+	if(password == null){ //취소일때
+		return false;
 	
-	//ajax 요청 db 삭제
-	
-	
-	//화면에서 지운다
-	$("#t"+no).remove();
+	}else if(password == ""){ //확인 비빔번호 없을때
+		alert("비밀번호를 입력하세요ㅕ");
+		
+	}else { //정상일때
+
+		console.log(password);
+		
+		//password, no
+		let $this = $(this);
+		let no = parseInt($this.data("no"));
+		console.log(no);
+		
+		//ajax 요청 db 삭제
+		let guestVo = {
+			no: no,
+			password: password
+		};
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/api/guest/delete",		
+			type : "post",	//이거 get으로 해도 어차피 안 보임
+			//보낼 때
+			contentType : "application/json",
+			data : JSON.stringify(guestVo),
+
+			//받을 때
+			dataType : "json",
+			success : function(jsonResultVo){
+				/*성공시 처리해야될 코드 작성*/
+
+				//화면에서 지운다 - jsonResultVo.data가 true일 때
+				if(jsonResultVo.data == true){
+					alert("삭제 성공");
+					$("#t"+no).remove();
+				}else if(jsonResultVo.data == false){
+					alert("패스워드 불일치");
+				}else{
+					alert("오류");
+				}
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	}	
 	
 });
 	

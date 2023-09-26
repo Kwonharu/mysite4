@@ -66,6 +66,25 @@ public class GuestService {
 		return guestDao.selectOneGuest(no);
 	}
 	
+	
+	//guest 삭제 ajax
+	public boolean deleteGuest(GuestVo guestVo) {
+		System.out.println("GuestService.guestDelete()");
+		
+		//no와 password가 일치하는 계정 찾기
+		GuestVo gVo = guestDao.selectGuestOne(guestVo);
+		//System.out.println(gVo);
+		
+		//비즈니스 로직
+		if(gVo == null){	//해당 계정 없음 (패스워드 틀림)
+			return false;
+		}else {	//계정이 있음 (패스워드 일치 시)
+			guestDao.deleteGuest(gVo.getNo());
+			return true;
+		}
+		
+	}
+	
 }
 
 

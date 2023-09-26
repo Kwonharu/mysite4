@@ -62,7 +62,22 @@
 	
 	</insert>
 	
-
+	
+	
+	<!-- 1명 찾기 ajax -->
+	<select id="selectGuestOne" parameterType="com.javaex.vo.GuestVo" resultType="com.javaex.vo.GuestVo">
+		<![CDATA[
+			select  no,
+			        name,
+			        password,
+			        content,
+			        reg_date regDate
+			from guestbook
+			where no = #{no}
+			and password = #{password}
+		]]>
+	</select>
+	
 </mapper>
 
 
