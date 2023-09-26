@@ -205,15 +205,23 @@ $(".imgItem").on("click", function(){
 			$("#viewModal #viewModelImg").attr("src", "${pageContext.request.contextPath}/upload/"+galleryVo.saveName);
 			console.log(galleryVo.filePath);
 			$("#viewModal #viewModelContent").text(galleryVo.content);
+			
+			if("${sessionScope.authUser.no}" != galleryVo.userNo){
+				$("#btnDel").hide();
+			}else{
+				$("#btnDel").show();
+			}
+				
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
 	});
-	
-
-	
 });
+
+
+
+
 
 
 </script>
