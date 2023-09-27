@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,7 +27,8 @@ public class BoardController {
 	
 	//리스트(검색 O)
 	@RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.POST})
-	public String list(@RequestParam(value="keyword", required=false, defaultValue="") String keyword, Model model){
+	public String list(@RequestParam(value="keyword", required=false, defaultValue="") String keyword,
+					   Model model){
 		System.out.println("BoardController.list()");
 		
 		//boardService를 통해 리스트를 가져온다
@@ -38,6 +40,24 @@ public class BoardController {
 		
 		return "board/list";
 	}
+	
+	
+	//리스트 페이징 (검색X, 페이징O)
+	@RequestMapping(value="/list3", method={RequestMethod.GET, RequestMethod.POST})
+	public String list3(@RequestParam(value="crtPage", required=false, defaultValue="1") int crtPage, 
+						Model model) {
+		System.out.println("BoardController.list3()");
+		
+		//service를 통해 리스트를 가져온다
+		Map<String, Object> pMap = boardService.getBoardList3(crtPage);
+		//System.out.println(pMap);
+		
+		//모델에 리스트를 담는다(DS가 포워드한다)
+		model.addAttribute("pMap", pMap);
+		
+		return "board/list3";
+	}
+	
 	
 	//게시글 
 	@RequestMapping(value="/read", method={RequestMethod.GET, RequestMethod.POST})

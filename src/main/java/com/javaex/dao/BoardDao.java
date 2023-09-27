@@ -1,6 +1,8 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,33 @@ public class BoardDao {
 		
 		return boardList;
 	}
+	
+	
+	//리스트 (검색X, 페이징O)
+	public List<BoardVo> boardSelectList3(int startRNum, int endRNum) {
+		System.out.println("BoardDao.boardSelectList3()");
+		
+		Map<String, Integer> pageMap = new HashMap<String, Integer>();
+		pageMap.put("startRNum", startRNum);
+		pageMap.put("endRNum", endRNum);
+		//System.out.println(pageMap);
+		
+		List<BoardVo> boardList = sqlSession.selectList("board.selectList3", pageMap);
+		
+		return boardList;
+	}
+	
+	
+	//글 전체 갯수
+	public int selectTotalCnt() {
+		System.out.println("BoardDao.selectTotalCnt()");
+		
+		//총 글 갯수 
+		int totalCount = sqlSession.selectOne("board.selectTotalCnt");
+		
+		return totalCount;
+	} 
+	
 	
 	//조회수 증가
 	public int updateHit(int no) {

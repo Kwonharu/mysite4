@@ -16,9 +16,57 @@
 			FROM board BO, users US
 			WHERE BO.user_no = US.no		
 			and bo.title LIKE '%'||#{keyword}||'%'
-			order by reg_date desc
+			order by no desc
 		]]>
 	</select>
+	
+	
+	<!-- //리스트 (검색X, 페이징O) -->
+	<select id="selectList3" parameterType="map" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  ort.rn,
+			        ort.no,
+			        ort.title,
+			        ort.content,
+			        ort.hit,
+			        ort.regDate,
+			        ort.userNo,
+			        ort.name
+			from (select rownum rn,
+			             ot.no,
+			             ot.title,
+			             ot.content,
+			             ot.hit,
+			             ot.regDate,
+			             ot.userNo,
+			             ot.name 
+			      from (select  b.no,
+			                    b.title,
+			                    b.content,
+			                    b.hit,
+			                    to_char(b.reg_date, 'YYYY-MM-DD HH:MI') regDate,
+			                    b.user_no userNo,
+			                    u.name        
+			            from board b, users u
+			            where b.user_no = u.no
+			            order by b.no asc
+			            ) ot
+			      ) ort   
+			where rn >= #{startRNum}
+			and   rn <= #{endRNum}
+		]]>
+	</select>
+	
+	
+	<!-- 글 전체 갯수 -->
+	<select id="selectTotalCnt" resultType="int">
+		<![CDATA[
+			select count(*) count
+			from board
+		]]>
+	</select>
+	
+	
 	
 	<!-- 조회수 증가 -->
 	<update id="updateHit" parameterType="int">
