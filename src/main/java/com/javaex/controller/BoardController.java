@@ -59,6 +59,22 @@ public class BoardController {
 	}
 	
 	
+	//리스트(검색 O, 페이징 O)
+	@RequestMapping(value="/list4", method={RequestMethod.GET, RequestMethod.POST})
+	public String list4(@RequestParam(value="keyword", required=false, defaultValue="") String keyword,
+						@RequestParam(value="crtPage", required=false, defaultValue="1") int crtPage,
+					    Model model){
+		System.out.println("BoardController.list4()");
+		
+		Map<String, Object> pMap = boardService.getBoardList4(keyword, crtPage);
+		
+		//모델에 리스트를 담는다(포워드)
+		model.addAttribute("pMap", pMap);
+		
+		return "board/list4";
+	}
+	
+	
 	//게시글 
 	@RequestMapping(value="/read", method={RequestMethod.GET, RequestMethod.POST})
 	public String read(@RequestParam(value="no") int no,

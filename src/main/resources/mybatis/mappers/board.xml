@@ -67,6 +67,23 @@
 	</select>
 	
 	
+	<!-- 리스트 + 검색 + 페이징 -->
+	<select id="boardSelectList4" parameterType="map" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			SELECT  BO.no,
+			        BO.title,
+			        BO.content,
+			        US.name,
+			        BO.hit,
+			        TO_CHAR(BO.reg_date, 'YYYY-MM-DD HH:MI') regDate,
+			        US.no userNo
+			FROM board BO, users US
+			WHERE BO.user_no = US.no		
+			and bo.title LIKE '%'||#{keyword}||'%'
+			order by no asc
+		]]>
+	</select>
+	
 	
 	<!-- 조회수 증가 -->
 	<update id="updateHit" parameterType="int">

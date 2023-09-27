@@ -87,14 +87,6 @@ public class BoardService {
 										/* 157/10.0 => 15.7 => 16 */
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		//이전 화살표 유무
 		boolean prev = false;
 		if(startPageBtnNo != 1) {
@@ -117,6 +109,23 @@ public class BoardService {
 		pMap.put("prev", prev);
 		pMap.put("next", next);
 		pMap.put("boardList", boardList);
+		
+		return pMap;
+	}
+	
+	
+	//리스트 (검색O, 페이징O)
+	public Map<String, Object> getBoardList4(String keyword, int crtPage) {
+		System.out.println("BoardService.getBoardList4()");
+		
+		
+		List<BoardVo> boardList = boardDao.boardSelectList4(keyword);
+		
+		
+		Map<String, Object> pMap = new HashMap<String, Object>();
+		pMap.put("boardList", boardList);
+		
+		
 		
 		return pMap;
 	}

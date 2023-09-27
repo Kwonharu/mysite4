@@ -53,6 +53,16 @@ public class BoardDao {
 	} 
 	
 	
+	//리스트 (검색O, 페이징O)
+	public List<BoardVo> boardSelectList4(String keyword) {
+		System.out.println("BoardDao.boardSelectList4()");
+		
+		List<BoardVo> boardList = sqlSession.selectList("board.boardSelectList4", keyword);
+		
+		return boardList;
+	}
+	
+	
 	//조회수 증가
 	public int updateHit(int no) {
 		System.out.println("BoardDao.updateHit()");
