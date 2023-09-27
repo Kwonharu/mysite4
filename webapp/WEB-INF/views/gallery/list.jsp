@@ -10,11 +10,11 @@
 
 <!-- css -->
 <link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath }/assets/css/gallery.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/gallery.css" rel="stylesheet" type="text/css">
 
 <!-- js -->
-<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 
 </head>
@@ -66,7 +66,7 @@
 							
 							<!-- 이미지반복영역 -->
 							<c:forEach items="${requestScope.galleryList}" var="galleryVo">
-								<li>
+								<li id="galleryList${galleryVo.no}">
 									<div class="view" >
 										<img data-no="${galleryVo.no}" class="imgItem" src="${pageContext.request.contextPath}/upload/${galleryVo.saveName}">
 										<div class="imgWriter">작성자: <strong>${galleryVo.name}</strong></div>
@@ -140,7 +140,7 @@
 			</div>
 			<div class="modal-body">
 				
-				<div class="formgroup" >
+				<div class="formgroup" id="viewModalBox">
 					<img id="viewModelImg" src =""> <!-- ajax로 처리 : 이미지출력 위치-->
 				</div>
 				
@@ -210,6 +210,7 @@ $(".imgItem").on("click", function(){
 				$("#btnDel").hide();
 			}else{
 				$("#btnDel").show();
+				$("#btnDel").data("no", galleryVo.no);
 			}
 				
 		},
@@ -220,6 +221,43 @@ $(".imgItem").on("click", function(){
 });
 
 
+//삭제 버튼 눌렀을 때
+$("#btnDel").on("click", function(){
+	console.log("삭제해라 애송이");
+	
+	//해당 게시글 no
+	let no = $(this).data("no");
+	console.log(no);
+	
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/gallery/delete",
+		type : "post",	//이거 get으로 해도 어차피 안 보임
+		//보낼 때
+		/* contentType : "application/json", */
+		data : {no: no},
+
+		//받을 때
+		dataType : "json",
+		success : function(count){
+			console.log(count);
+			
+			if(count != -1){
+				alert("삭제 성공");
+				$("#galleryList"+no).remove();
+				$("#viewModal").modal("hide");
+			}else{
+				alert("오류");
+			}
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+		
+	
+});
 
 
 

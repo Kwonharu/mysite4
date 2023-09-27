@@ -104,6 +104,15 @@ public class GalleryService {
 		
 		return galleryVo;
 	}
+	
+	//글 삭제
+	public int eraseGallery(int no) {
+		System.out.println("GalleryService.eraseGallery()");
+		
+		int count = galleryDao.deleteGallery(no);
+		
+		return count;
+	}
 }
 
 
